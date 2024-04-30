@@ -4,6 +4,8 @@ import random
 with open("sonad.txt", "r") as f:
     words = f.read().splitlines()
 
+alphabet = "a b d e f g h i j k l m n o p r s š z ž t u v õ ä ö ü".split()
+
 letter_boxes = []
 attempts = 0
 max_attempts = 6
@@ -21,7 +23,7 @@ def create_new_row():
     for btn in alphabet_buttons:
         btn.config(bg="lightgrey", fg="black")
     
-    alphabet_state = {chr(i): 'unused' for i in range(97, 123)}
+    alphabet_state = {letter: 'unused' for letter in alphabet}
     target_word = random.choice(words).lower()
     attempts = 0
     word_length = len(target_word)
@@ -126,6 +128,7 @@ def start_new_game():
 window = tk.Tk()
 window.title("Wordle")
 window.configure(bg="grey")
+window.iconbitmap("icon.ico")
 
 centered_label = tk.Label(window, text="Arva ära sõna", font=("Arial", 18), bg="grey")
 centered_label.pack(expand=True, pady=10)
@@ -143,8 +146,7 @@ alphabet_frame = tk.Frame(window, bg="grey")
 alphabet_frame.pack(pady=10)
 
 alphabet_buttons = []
-for i in range(26):
-    letter = chr(97 + i) 
+for letter in alphabet:
     btn = tk.Button(alphabet_frame, text=letter, font=("Arial", 12), width=2, bg="lightgrey", fg="black")
     btn.config(command=lambda l=letter: add_letter_to_box(l)) 
     alphabet_buttons.append(btn)
